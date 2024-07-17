@@ -131,12 +131,13 @@ def cal_supportarea(item1, item2) -> float:
         return 0
     a_xy = calculate_intersection(y1, y1 + w1, y2, y2 + w2)
     b_xy = calculate_intersection(x1, x1 + l1, x2, x2 + l2)
-    s_q : float = a_xy * b_xy
+    s_q: float = a_xy * b_xy
     return s_q
 
+
 # item1 如果是fragile,则不能被放在非fragile的物体下面，但如果item2也是fragile 则可以，反过来同理
-def is_fragile_satisfied(item1:Item, item2: Item) -> bool:
-    #二者都是fragile或者都是non_fragile，则返回 true
+def is_fragile_satisfied(item1: Item, item2: Item) -> bool:
+    # 二者都是fragile或者都是non_fragile，则返回 true
     if item1.fragile == item2.fragile:
         return True
 
@@ -146,22 +147,23 @@ def is_fragile_satisfied(item1:Item, item2: Item) -> bool:
     l2, w2, h2 = item2.get_dimensions()
 
     # 如果item1 易碎，则不能放在item2 下面
-    if item1.fragile ==1 and item2.fragile ==0:
+    if item1.fragile == 1 and item2.fragile == 0:
         if not z1 + h1 == z2:
-            return True
-        a_xy = calculate_intersection(y1, y1 + w1, y2, y2 + w2)
-        b_xy = calculate_intersection(x1, x1 + l1, x2, x2 + l2)
-        if a_xy*b_xy>0:
-            return False
-        return True
-    if item1.fragile == 0 and item2.fragile == 1:
-        if not z1  == z2 + h2:
             return True
         a_xy = calculate_intersection(y1, y1 + w1, y2, y2 + w2)
         b_xy = calculate_intersection(x1, x1 + l1, x2, x2 + l2)
         if a_xy * b_xy > 0:
             return False
-        return  True
+        return True
+    if item1.fragile == 0 and item2.fragile == 1:
+        if not z1 == z2 + h2:
+            return True
+        a_xy = calculate_intersection(y1, y1 + w1, y2, y2 + w2)
+        b_xy = calculate_intersection(x1, x1 + l1, x2, x2 + l2)
+        if a_xy * b_xy > 0:
+            return False
+        return True
+
 
 def slide_item(item, container_length, container_width, container_height, placed_items):
     l, w, h = item.get_dimensions()
@@ -184,22 +186,63 @@ def slide_item(item, container_length, container_width, container_height, placed
             item.y += 0.01
             break
 
+
+# 通过投影关系找一个方向上最大的可以滑动的距离
+def find_max_X_slide_distance_using_projections(new_item, placed_items) -> float:
+    max_slide_x = float('inf')
+    for other in placed_items:
+        l, w, h = other.get_dimensions()
+        if other.x + l > new_item.x:
+            continue
+        if not (new_item.y + new_item.width <= other.y or other.y + w <= new_item.y or
+                new_item.z + new_item.height <= other.z or other.z + h <= new_item.z):
+            max_slide_x = min(max_slide_x, new_item.x - other.x - l)
+    return max_slide_x
+
+
+# 通过投影关系找一个方向上最大的可以滑动的距离
+def find_max_Y_slide_distance_using_projections(new_item, placed_items) -> float:
+    max_slide_y = float('inf')
+    for other in placed_items:
+        l, w, h = other.get_dimensions()
+        if other.y + w > new_item.y:
+            continue
+        if not (new_item.x + new_item.length <= other.x or other.x + l <= new_item.x or
+                new_item.z + new_item.height <= other.z or other.z + h <= new_item.z):
+            max_slide_y = min(max_slide_y, new_item.y - other.y - w)
+    return max_slide_y
+
+
+# 通过投影关系找一个方向上最大的可以滑动的距离
+def find_max_Z_slide_distance_using_projections(new_item, placed_items) -> float:
+    max_slide_z = float('inf')
+    for other in placed_items:
+        l, w, h = other.get_dimensions()
+        if other.z + h > new_item.z:
+            continue
+        if not (new_item.y + new_item.width <= other.y or other.y + w <= new_item.y or
+                new_item.x + new_item.length <= other.x or other.x + l <= new_item.x):
+            max_slide_z = min(max_slide_z, new_item.z - other.z - h)
+    return max_slide_z
+
+
 # 二分法查找一个方向上最大可以滑动距离
-def find_max_slide_distance(item, direction,placed_items)->float:
+def find_max_slide_distance(item, direction, placed_items) -> float:
     low, high = 0.0, 1.0
-    while can_slide(high,item,placed_items,direction):
+    while can_slide(high, item, placed_items, direction):
         low = high
-        high *=  2
+        high *= 2
 
     while high - low > 1e-3:  # Use a small epsilon for precision
         mid = (low + high) / 2
-        if can_slide(mid,item,placed_items,direction):
+        if can_slide(mid, item, placed_items, direction):
             low = mid
         else:
             high = mid
     return low
 
-def can_slide(dist,item,placed_items,direction)->bool:
+
+def can_slide(dist, item, placed_items, direction) -> bool:
     if direction == 'x':
         item.x -= dist
     elif direction == 'y':

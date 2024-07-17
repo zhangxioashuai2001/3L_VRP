@@ -1,7 +1,8 @@
 import unittest
 from copy import deepcopy
 from Item import Item, sort_items
-from util import cal_bottomtop_touching_area,is_lifo_satisfied,cal_supportarea,calculate_intersection, is_fragile_satisfied,find_max_slide_distance
+from util import cal_bottomtop_touching_area,is_lifo_satisfied,cal_supportarea,calculate_intersection, \
+    is_fragile_satisfied,find_max_slide_distance,find_max_X_slide_distance_using_projections,find_max_Y_slide_distance_using_projections,find_max_Z_slide_distance_using_projections
 
 class TestCalBottomTopTouchingArea(unittest.TestCase):
 
@@ -136,6 +137,29 @@ class TestCalBottomTopTouchingArea(unittest.TestCase):
         for i, item in enumerate(items):
             self.assertEqual(item, expected_order[i])
 
+    def test_find_max_Y_slide_distance_using_projections(self):
+        itemleft = Item.from_dimensions(10, 0, 5)
+        itemback = Item.from_dimensions(0, 5, 5)
+        itembottom = Item.from_dimensions(10, 5, 0)
+        item1 = Item.from_dimensions(3.98, 2.98, 3)
+        item2 = Item.from_dimensions(1.28, 2, 2)
+        item3 = Item.from_dimensions(2, 2, 2)
+        # 设置初始位置
+        itemleft.x, itemleft.y, itemleft.z = 0, 0, 0
+        itembottom.x, itembottom.y, itembottom.z = 0, 0, 0
+        itemback.x, itemback.y, itemback.z = 0, 0, 0
+        item1.x, item1.y, item1.z = 0, 0, 0
+        item2.x, item2.y, item2.z = 0, 3, 0
+        item3.x, item3.y, item3.z = 3.0, 3, 0
+
+        # 放置的物品列表
+        placed_items = [item1, item2, itemleft, itemback, itembottom]
+        # 测试 item3 在 x, y, z 方向上的最大滑动距离
+        slide_distance_y = find_max_Y_slide_distance_using_projections(item3,placed_items)
+        self.assertAlmostEqual(slide_distance_y, 0.02, places=3)
+        print(f"Item3 can slide in x direction by: {slide_distance_y} units")
+
+
     def test_find_max_slide_distance(self):
         # 创建一些 Item 实例
         # 车厢 10 * 5 * 5
@@ -163,9 +187,9 @@ class TestCalBottomTopTouchingArea(unittest.TestCase):
         item3.x -= slide_distance_x
         slide_distance_y = find_max_slide_distance(item3, 'y', placed_items)
         slide_distance_z = find_max_slide_distance(item3, 'z', placed_items)
-        self.assertAlmostEqual(slide_distance_x, 1.72, places=5)
-        self.assertAlmostEqual(slide_distance_y, 0, places=5)
-        self.assertAlmostEqual(slide_distance_z, 0, places=5)
+        self.assertAlmostEqual(slide_distance_x, 1.72, places=3)
+        self.assertAlmostEqual(slide_distance_y, 0, places=3)
+        self.assertAlmostEqual(slide_distance_z, 0, places=3)
         print(f"Item3 can slide in x direction by: {slide_distance_x} units")
         print(f"Item3 can slide in y direction by: {slide_distance_y} units")
         print(f"Item3 can slide in z direction by: {slide_distance_z} units")

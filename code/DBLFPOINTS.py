@@ -5,7 +5,8 @@ import pandas as pd
 import random
 from Item import Item, items_overlap
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-from util import slide_item,is_lifo_satisfied,cal_supportarea,is_fragile_satisfied,find_max_slide_distance
+from util import slide_item,is_lifo_satisfied,cal_supportarea,is_fragile_satisfied,find_max_X_slide_distance_using_projections,\
+    find_max_Y_slide_distance_using_projections,find_max_Z_slide_distance_using_projections
 from data_read import create_items_from_lwh_ni_grouped
 # 终止条件是所有item全被放下（有可能超出长度限制），或者没有被全部放下但是loading length 已经> 2*container_length了
 # 输出分4块  第一块表示是否能装下，bool;第二块表示type1类物品（loading length < container_length,如果第一块为True,则所有物品都是Type1）;
@@ -64,12 +65,12 @@ def dblf_packing_with_points(items, container_length, container_width, container
                     # if not (overlap or lifo_violation or support_area_violation or fragile_violation):
                     if not overlap:
                         # # 如果没有overlap，则尝试平移，平移之后再判断其他约束
-                        # slide_x = find_max_slide_distance(item, 'x', placed_items)
-                        # item.x -= slide_x
-                        # slide_z = find_max_slide_distance(item, 'z', placed_items)
-                        # item.z -= slide_z
-                        # slide_y = find_max_slide_distance(item, 'y', placed_items)
-                        # item.y -= slide_y
+                        slide_x = find_max_X_slide_distance_using_projections(item,placed_items)
+                        item.x -= slide_x
+                        slide_z = find_max_Z_slide_distance_using_projections(item,placed_items)
+                        item.z -= slide_z
+                        slide_y = find_max_Y_slide_distance_using_projections(item,placed_items)
+                        item.y -= slide_y
                         for other in placed_items:
                             if not is_lifo_satisfied(item, other):
                                 lifo_violation = True
@@ -115,13 +116,13 @@ def dblf_packing_with_points(items, container_length, container_width, container
             # sp.remove(point_best)
             # 如果还加入了fragile ，lifo ，support area约束 就不要slide了
             # Slide the item in x, y, z directions
-            slide_item(item, container_length, container_width, container_height, placed_items)
-            slide_x = find_max_slide_distance(item, 'x', placed_items)
-            item.x -= slide_x
-            slide_z = find_max_slide_distance(item, 'z', placed_items)
-            item.z -= slide_z
-            slide_y = find_max_slide_distance(item, 'y', placed_items)
-            item.y -= slide_y
+            # slide_item(item, container_length, container_width, container_height, placed_items)
+            # slide_x = find_max_X_slide_distance_using_projections(item, placed_items)
+            # item.x -= slide_x
+            # slide_z = find_max_Z_slide_distance_using_projections(item, placed_items)
+            # item.z -= slide_z
+            # slide_y = find_max_Y_slide_distance_using_projections(item, placed_items)
+            # item.y -= slide_y
 
             placed_items.append(item)
             sp = [p for p in sp if p != point_best]

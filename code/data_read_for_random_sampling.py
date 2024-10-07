@@ -21,8 +21,6 @@ def create_items_from_second_file(df):
         item = Item.from_dimensions_and_fragile(length=l, width=w, height=h, fragile=0)
         items.append(item)
 
-
-
     if sample_counter > 0:
         grouped_items[sample_counter] = items  # 保存最后一个样本的物品
 

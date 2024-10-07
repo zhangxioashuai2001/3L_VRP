@@ -1,0 +1,47 @@
+--------------------------------------------------------
+New Run Log Start
+
+Processing file: trainingbig0.1.csv
+
+全局 if_loaded 的平均值:
+0.3626
+
+SVM Test Accuracy: 0.8544
+SVM Test Confusion Matrix:
+[[701  84]
+ [ 98 367]]
+
+Training Accuracy: 0.8469333333333333
+Training 10-Folds Confusion Matrix:
+[[2116  286]
+ [ 288 1060]]
+
+--------------------------------------------------------
+New Run Log Start
+
+Processing file: trainingbig0.1.csv
+
+全局 if_loaded 的平均值:
+0.3626
+
+--------------------------------------------------------
+New Run Log Start
+
+Processing file: trainingbig0.1.csv
+
+全局 if_loaded 的平均值:
+0.3626
+
+全局容积率的平均值:
+0.2701631237530864
+
+SVM Test Accuracy: 0.8544
+SVM Test Confusion Matrix:
+[[701  84]
+ [ 98 367]]
+
+Training Accuracy: 0.8469333333333333
+Training 10-Folds Confusion Matrix:
+[[2116  286]
+ [ 288 1060]]
+

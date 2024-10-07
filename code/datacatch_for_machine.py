@@ -5,9 +5,10 @@ from typing import List
 
 
 class LoadMasterData:
-    def __init__(self, path, sheet):
+    def __init__(self, path, item_size, type_rate):
         self.path = path
-        self.sheet = sheet
+        self.item_size = item_size
+        self.type_rate = type_rate
         self.rawdata = None
         self.indexlist = []
         self.readdata()
@@ -59,13 +60,15 @@ class LoadMasterData:
         df['spare_capacity'] = self.spare_capacity
         df['sku_concentration'] = self.sku_concentration
 
+
         # 创建目录路径
         folder_path = 'svm'
-        csv_file_path = os.path.join(folder_path, 'training.csv')
+        csv_file_path = os.path.join(folder_path, f'training{self.item_size}{self.type_rate}.csv')
         df.to_csv(csv_file_path, index=True, index_label='orderid', encoding='gbk')
 
     def readdata(self) -> None:
-        self.rawdata = pd.read_excel(self.path, sheet_name=self.sheet)
+        self.rawdata = pd.read_csv(self.path)
+        # self.rawdata = pd.read_excel(self.path)
         self.__getindexlist()
         self.indexlist.append([len(self.rawdata),0])
 
@@ -290,10 +293,19 @@ class LoadMasterData:
         return sku_concentration
 
 def main():
-    data = LoadMasterData(path="items.xlsx", sheet = 0 )
-    data.readdata()
-    print(data.rawdata, data.indexlist,len(data.indexlist),data.sku_counts, data.total_skuvolume,data.ifloaded)
-    data.generateExcel()
+    item_size_list = ['big', 'medium', 'small']
+    type_rate_list = [0.1, 0.3, 0.5, 0.7, 1.0]
+    # generate_order(container_length,container_width,container_height)
+    for item_size in item_size_list:
+        for type_rate in type_rate_list:
+
+            file_path = f'data/{item_size}_items_type_rate{type_rate}.csv'
+            # file_path = r'items.xlsx'
+            data = LoadMasterData(path=file_path,item_size= item_size, type_rate= type_rate)
+            data.readdata()
+            # print(data.rawdata, data.indexlist,len(data.indexlist),data.sku_counts, data.total_skuvolume,data.ifloaded)
+            print(f'{item_size}{type_rate}is running')
+            data.generateExcel()
 
 
 main()

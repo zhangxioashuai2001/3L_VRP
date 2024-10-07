@@ -1,0 +1,112 @@
+数据集: big, 类型比例: 0.1
+全局 if_loaded 的平均值:
+0.3626
+
+全局容积率的平均值、最大值、最小值:
+0.6599360622222222, 0.9949333333333333, 0.21866666666666668
+
+SVM Test Accuracy: 0.848
+SVM Test Precision: 0.8873239436619719
+SVM Test Recall: 0.6774193548387096
+SVM Test Confusion Matrix:
+[[745  40]
+ [150 315]]
+
+Training Accuracy: 0.8522666666666666
+Training Precision: 0.8662361623616236
+Training Recall: 0.6965875370919882
+Training 10-Folds Confusion Matrix:
+[[2257  145]
+ [ 409  939]]
+
+数据集: big, 类型比例: 0.3
+全局 if_loaded 的平均值:
+0.343
+
+全局容积率的平均值、最大值、最小值:
+0.6484108044444444, 0.9996, 0.0992
+
+SVM Test Accuracy: 0.8616
+SVM Test Precision: 0.8484848484848485
+SVM Test Recall: 0.7230046948356808
+SVM Test Confusion Matrix:
+[[769  55]
+ [118 308]]
+
+Training Accuracy: 0.8464
+Training Precision: 0.8353715898400753
+Training Recall: 0.6889061287820015
+Training 10-Folds Confusion Matrix:
+[[2286  175]
+ [ 401  888]]
+
+数据集: big, 类型比例: 0.5
+全局 if_loaded 的平均值:
+0.328
+
+全局容积率的平均值、最大值、最小值:
+0.6493921022222222, 0.9951555555555556, 0.12906666666666666
+
+SVM Test Accuracy: 0.8296
+SVM Test Precision: 0.815625
+SVM Test Recall: 0.6289156626506024
+SVM Test Confusion Matrix:
+[[776  59]
+ [154 261]]
+
+Training Accuracy: 0.8536
+Training Precision: 0.8287937743190662
+Training Recall: 0.6955102040816327
+Training 10-Folds Confusion Matrix:
+[[2349  176]
+ [ 373  852]]
+
+数据集: big, 类型比例: 0.7
+全局 if_loaded 的平均值:
+0.3196
+
+全局容积率的平均值、最大值、最小值:
+0.64723384, 0.9978666666666667, 0.096
+
+SVM Test Accuracy: 0.8664
+SVM Test Precision: 0.8536585365853658
+SVM Test Recall: 0.7017543859649122
+SVM Test Confusion Matrix:
+[[803  48]
+ [119 280]]
+
+Training Accuracy: 0.8610666666666666
+Training Precision: 0.8259615384615384
+Training Recall: 0.7164303586321935
+Training 10-Folds Confusion Matrix:
+[[2370  181]
+ [ 340  859]]
+
+数据集: big, 类型比例: 1.0
+全局 if_loaded 的平均值:
+0.3164
+
+全局容积率的平均值、最大值、最小值:
+0.6436475288888889, 0.9990666666666667, 0.12195555555555555
+
+SVM Test Accuracy: 0.8624
+SVM Test Precision: 0.8422712933753943
+SVM Test Recall: 0.6863753213367609
+SVM Test Confusion Matrix:
+[[811  50]
+ [122 267]]
+
+Training Accuracy: 0.8552
+Training Precision: 0.8230616302186878
+Training Recall: 0.694048616932104
+Training 10-Folds Confusion Matrix:
+[[2379  178]
+ [ 365  828]]
+
+数据集: medium, 类型比例: 0.1
+全局 if_loaded 的平均值:
+0.0
+
+全局容积率的平均值、最大值、最小值:
+0.7600945955555556, 0.999, 0.43066666666666664
+

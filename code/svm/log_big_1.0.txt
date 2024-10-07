@@ -1,0 +1,26 @@
+全局 if_loaded 的平均值:
+0.3164
+
+全局容积率的平均值\最大值、最小值:
+0.6436475288888889\0.9990666666666667\0.12195555555555555
+
+SVM Test Accuracy: 0.8624
+SVM Test Precision: 0.8422712933753943
+SVM Test Recall: 0.6863753213367609
+SVM Test Confusion Matrix:
+[[811  50]
+ [122 267]]
+
+Training Accuracy: 0.8552
+Training Precision: 0.8230616302186878
+Training Recall: 0.694048616932104
+Training 10-Folds Confusion Matrix:
+[[2379  178]
+ [ 365  828]]
+
+全局 if_loaded 的平均值:
+0.0
+
+全局容积率的平均值\最大值、最小值:
+0.7600945955555556\0.999\0.43066666666666664
+
